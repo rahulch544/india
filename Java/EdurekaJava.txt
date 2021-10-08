@@ -1,0 +1,291 @@
+JAVA EDUREKA:
+ First released by SUN MICROSYSTEMS IN 1995
+
+Created James Gosling
+ 
+ 
+ JAVA is a computer programming lang that enforces object-oriented programming.
+ Everything is an object in java and the object has a state and behavior.
+ 
+ Platform independent. Logic write once, Run anywhere
+ 
+ The compiled version of the class can be executed anywhere. 
+ 
+ Secure:
+ Runs inside the virtual machine to prevent any activity from untrusted sources
+ No use of explicit pointers. (Does not expose pointers, i.e., does not give the address of memory location)
+ 
+ Robust:
+ Java takes care of memory allocation and release. (memory cleaning is done automatically by threads)
+ Checks code during compile and during run time.
+ 
+ Portable:
+ Can be run on any machine.
+ 
+ Dynamic:
+ Objects are evaluated at runtime and execution is carried out.
+ Ex: Runtime polymorphism.
+ 
+ Distributed:
+ Remote method Invocation, Enterprise Java Beans.
+ Using this a program can call a method of another program running in some other computers in a computer.
+ 
+ Multi-Thread:
+ Thread is a task in a process/program running multiple tasks and executing at the same time.
+
+Object-Oriented:
+Java can be extended because of this feature.
+
+Java used in Andriod Apps, Server apps at Financial Services Industry & Java web applications, embedded systems, java uses only 130kb memory only to use java technology.
+
+JavaCode(.java) -> Javac Complier -> Byte Code(.class) ->JVM (every system must have this to execute .class file -> machines
+
+JAVA RUNTIME ENVRINOMENT. (Useful to run class file)(No debuggers or compliers)
+JRE = JVM(Platform dependent) + set of libraries + other additional files
+(Provides above all to run java applications written in java PL)
+
+Java Development Kit ( includes debuggers and compilers and for developer, we require this)
+JDK = JRE + Development tools.
+
+Compile Time Env:
+Java Source (.java). -> Java Complier -> Java Bytecode (.class)
+
+Run time Env:
+Java Bytecode (.class) -> class loader bytecode verifier <- Java class libraries
+class loader bytecode verifier ->(Java interpreter & Just in time compiler) -> Runtime system -> OS ->hardware.
+
+public: accessible from everywhere.
+ protected: accessible by the classes of the same package and the subclasses residing in any package. 
+default (no modifier specified): accessible by the classes of the same package.
+ private: accessible within the same class only.
+
+Static methods can be called without creating an object of that class.
+final variables, methods, or objects cannot be changed.
+Abstract: Methods are declared but we do not implement them.
+The class should be Abstract type.
+Synchronized & Volatile:
+Synchronized methods can be accessed by one thread at a time.
+Volatile: 
+
+Variables
+Local: Confined to method or local scope, once we move from that method variable moves into the garbage.
+
+Class/Static: accessed by class.variable name one per class. (Public modifier is preferred)
+
+Instance variable: variable dedicated to the instance. (we can give access modifier) and these possess default values.
+Instance method must be called using the fully qualified name(instance. instance Var) in static methods whereas in normal methods that we can directly access them.
+
+Primitive Data types: byte, short, int, long float, double, char, boolean.
+Non Primitive Data types /Reference Datatypes: String, objects.
+
+Datatype conversion:
+Implicit conversion:
+(Can be converted from -> to implict conversion) but vice versa not possible (as memory allocation varies)
+byte->short->int->long->float->double
+int <-> char (returns asciii val or char for asciii val)
+Explicit conversion: 
+eg : int a=10;
+double a = (int) a;
+
+Type Conversion:
+
+String to integer
+Integer.parseInt();
+Interger.valueOf();
+
+Integer to String
+Integer.toString();
+String.valueOf();
+
+Operators:
+
+Control Statements:
+
+Simple for loop;
+for(init= var;condition;var incr or dcr){};
+
+for (type var : array){};
+
+labelname:
+for(init= var;condition;var incr or dcr){};
+
+Jump statements: break, continue.
+
+Methods are the behavior of a class. (class has state & behavior).
+Difference between method and function is that methods are declared in object class whereas functions are declared outside the object class
+Modifier returntype methodName ( Parametertype paramval,....){ return (if method not void type) };
+
+the return type (int or Integer both are same).
+
+Methods can be called by value (where the actual value of the variable does not change).
+Methods can be overloaded in the same class (Same method name but parameter type is different or number of arguments)
+
+Arrays are fixed datatype and fixed size. (index starts from 0)
+ArrayIndexOutOfBoundException
+int a[] =new int[size];    int []a =new int[size];
+int a[] ={,,,};     int []a = new int[]{,,,,};
+a.length
+
+Strings are immutable. (it can not be changed once declared)
+(memory location can be changed to an entirely new location but size cannot be extended)
+
+Strings.
+Security: Strings are used for network connection and database connection. To avoid access to these connections from external users, strings are immutable.
+
+Synchronization: The immutability of strings automatically makes the system thread-safe to solve the synchronization problem.
+
+Caching: String a ="hi";
+String b = a; (b->a->"hi" Location)
+String pool:
+pool of strings stored in Java Heap Memory.
+Possible only because strings are immutable.
+ 
+StringName.length()
+StringName.substring(startIndex).
+StringName1.compareTo(stringName2)
+StringName.toUpperCase();
+StringName.toLowerCase();
+StringName.replace(old,new);
+Stringname1.equals(StringName2)
+Stringname.chartAt();
+StringName.endsWith("c");
+
+StringBuffer is a mutable String. (memory size of same string can be increased)(Default value is 16 chars can be stored)
+StringBufferName.append();
+StringBufferName.insert(idx, char);
+StringBufferName.reverse();
+StringBufferName.capacity().
+
+StringBuilder. (Non-Synchronised) (So not thread-safe) (faster than StringBuffer)
+
+The constructor does not have a return type, invoked implicitly, used to initialize the object.
+Constructor Types:
+Default (created by the compiler), parametrized, non-parameterized constructor. Constructors can be overloaded but cannot be over-written.
+
+Constructor Chaining:
+
+Calling one constructor from another of the same class.
+
+static variable memory allocated only once. (one per class)
+Used for Memory management and if objects of the class have common property.
+
+In Java every object is stored in following levels.
+Eg: String s ="HelloWorld"; 
+(stackMemory pointer -> HeapMemory(StringPool)
+s->in stack Memory.
+HelloWorld ->Heap Memory
+
+Static methods have static in front of the class.
+public static void(){};
+
+Static methods can modify static variables.
+If you apply static keywords with any method, it is known as the static method.
+* A static method belongs to the class rather than the object of a class.
+* A static method can be invoked without the need for creating an instance of a class.
+* A static method can access static data members and can change the value.
+Restrictions for the static method
+There are two main restrictions for the static method. They are:
+1. The static method can not use non-static data members or call a non-static method directly.
+2. this and super cannot be used in a static context.
+
+Why is the Java main method static?
+Ans) It is because the object is not required to call a static method. If it were a non-static method, JVM creates an object first then call a main() method that will lead to the problem of extra memory allocation
+
+Java static block
+* Is used to initialize the static data member.
+* It is executed before the main method at the time of classloading.
+Eg: class A2{  
+  static{System.out.println("static block is invoked");}  
+  public static void main(String args[]){  
+   System.out.println("Hello main");  
+  }  
+} 
+Output: static block is invoked
+        Hello main
+
+
+Object-Oriented Programming:
+Inheritance:
+Object acquires some or all the properties and behavior of Parent Object.
+Achieves Method overriding and code reusability.
+Eg: class SubClasss extends PrentClass{};
+
+Polymorphism:
+When one task is performed in different ways.
+
+Method Overloading.
+Different no. of arguments or different data types for same method name and return type.
+
+Super:
+The super keyword is used to call immediate parent class only.
+
+a final class cannot be extended.
+a final method cannot be overridden.
+a final variable cannot be modified.
+A constructor cannot be declared as final.
+The final variable should be declared. (directly or in a constructor)
+
+Abstraction:
+ Mechanism of hiding the implementation details from the user and only providing the functionality to the user.
+Abstract class(0-100%absrtraction)
+Interface (100% abstraction)
+Any class contains one more method as abstract the class should be made as an abstract type.
+
+Encapsulation:
+Binding and data together into a single unit.
+Eg: Declare variables of class as private.
+Use setter and getter methods.
+
+Interface:
+Contains all specification and can be used while creating a new remote.
+All interface methods are of the abstract type.
+an interface can never constructor.
+a class can implement multiple interfaces.
+variables in the interface or of static and final type always by default.
+Methods are always by default public abstract type.
+A default method can be declared and defined in the interface and it cannot be overridden and it will available class which implements the interface.
+
+class->extends->class
+class->implements->interface
+interface->extends->interface
+
+static methods of an interface can directly be called using interface name.
+
+
+Regex.(util.regex.*)
+
+String pattern = "[a-z]";
+Pattern complied = Pattern.compile(pattern);
+Matcher matcher =complied.matcher("searchstring");
+matcher.find();
+.......;
+
+Exception:
+checked exception: compile-time exception. use try and catch.
+unchecked exception: Run time Exception.
+Error: eg: StackOverflow. external to the application.
+
+
+try, catch, finally.
+Finally, the block always executes.
+
+throw used to throw exceptions, whereas throws used to throw an exception to the caller method.   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

@@ -1,0 +1,243 @@
+Docker Commands
+
+
+docker pull containername ==> to pull latest image & starts the server
+docker pull ContainerName:version ==> to pull specified image & starts the server
+
+docker ps ==> to see all running docker containers
+
+
+Container Vs Image:  Conatiner is a running environment for image. Container (File system, Env configs, image) Container is port binded , to talk to application running inside container, file system is virtual 
+
+
+docker images ==> to see images present in local
+
+docker run image ==> runs container in attached mode
+
+docker run -d imageName ==> run in detached mode
+
+ctrl+c ==> to stop container
+
+to restart container
+docker stop containerId ==> to stop container
+docker start containerId ==> to start container
+
+docker ps -a ==> displays all containers running and not running moded r
+docker ps -aq==> to see only container ids
+
+To run same image with different version.
+
+docker run imagename:version ==> performs pull if image is not present, then starts the container
+
+Containers run on default image port defined in image config
+
+docker run -p(ourwish port number):containerport imagename
+
+run in detached mode
+
+docker run -p(ourwish port number):containerport -d imagename
+docker run -p (ourwish port number):containerport -d imagename ==> both works
+To Name the container
+
+docker run —name NameTheContainer -p(ourwish port number):containerport -d imagename
+
+
+docker logs ContainerId or ContainerName
+docker logs ContainerId or ContainerName | tail ==>to get latest log
+
+docker logs container Id -f ==> to stream logs docker stats => resource consumption of all cotnainers
+ docker stats containerName ==>resource consumption by container
+
+docker exec    -it containerId or containerName  /bin/bash  ==> to get container terminal using shell, in inetractive mode(i-interactive t for terminal)
+
+exit ==> to exit from container terminal
+
+docker run ==> Creates a new container of a image
+docker start ==> works on container, it will use container id , and it uses all container parameters which are declared while start
+
+docker rm ContainermName/containerId ==> to remove container
+
+
+docker network ls ==> shows different networks present in local (docker netwwork is group of containers in an isolated network)
+
+docker network create networkname ==> to create a network
+
+
+docker run -p 27017:27017 -d  -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password --name mongodb --net mongo-network  mongo
+
+docker run -p ourport:contaioner port setEnvUsername setEnvpassword NameContainer assignToNetwork 
+
+
+#  docker compose
+#Docker compose will take care of creating common network
+# It will take commands and mapped into a file, 
+# then they can be run in single strutcute
+
+# latest version of compose
+# version:'3'
+
+# #services
+# services:
+#  #container Name:
+#       # image:imageName
+#       mongodb:
+#       image:mongodb
+#       ports:
+#         - 27017:27017 #hostport(our system):Container Port
+#       environment:
+#         - MONGO-INITDB_ROOT_USERNAME=admin
+#         - MONGO-INITDB_ROOT_PASSWORD=password
+
+#       mongo-express:
+#         image:mongo-express
+#         ports:
+#          - 8080:8081 
+#          envirnoment:
+#          - ME_CONFIG_MONGOFB_ADMINUSERNAME = admin
+#          - ME_CONFIG_MONGOFB_ADMINPASSWORD = password
+#          - ME_CONFIG_MONGOFB_SERVER=mongodb
+
+#          #Docker compose will take care of creating common network
+
+To run docker compose file docker command is
+docker-compose -fileType fileName run
+docker-compose -f fileName.yaml up
+docker-compose -f fileName.yaml down ==> removes and stops containers and removes networks also
+
+
+
+Docker file:(file name is alwaysss “Dockerfile”) Blue print for building images
+
+FROM IMAGE  (start by basing our own on some other images, thus declared image is installed in our image)
+ENV MONGO_DB_PWD=password;(Optional env variables)
+RUN mkdir -p /home/app  (Creates a directory inside of container)(With RUN we can execute any linux command inside container only)
+COPY ./app /home/  (Copy files from host to container)
+CMD ["node", "server.js"] (Executes entry point linux command equilvaent to node server.js)(CMD - entry point)
+
+
+to create image form dockerfile
+
+docker build -t (to give tag name) ImageName:Version  place where should docker image should be created
+
+—Docker
+docker build -t imageName:version -f fileName (if it is not Dockerfile)
+docker run imageName:tag
+
+docker exec -it b9d2536bc533 /bin/sh  ==> to enter into terminal of container
+
+docker rmi imagName:tag ==>to remove image
+
+
+
+Docker repogistry;
+
+Creeate a docker repogistry using aws service with ecs and create repo which holds only one type of image but different version
+
+
+docker login command or get command from aws
+
+
+Image naming in docker registry
+
+
+registryDomain/imageName:tag
+
+docker pull image:tag is equivalent to docker pull docker.io/libraary/imageName
+
+so for private registry
+
+docker tag image:version image2:version (creates copy of image with image2 Name)
+
+docker push address.
+
+
+
+Docker Volumes to store data permanently:
+
+docker run -v Hostvolume(our file):Container file location
+
+docker run -v /var/lib/mysql/data. ==>Anonymous volume
+
+docker run -v name:cotainer file location(/var/lib/mysql/data). ==> You can referene the volume by name, should be used in production
+
+
+volumes: (under image)
+	- volume Name:/var/lib/mysql/data
+volumes: (Under all images)
+	volumeName
+
+
+
+version: '3'
+services:
+  # my-app:
+  # image: ${docker-registry}/my-app:1.0
+  # ports:
+  # - 3000:3000
+  mongodb:
+    image: mongo
+    ports:
+      - 27017:27017
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongo-data:/data/db    ///Name the data storing placing in container, this name can be used as reference
+  mongo-express:
+    image: mongo-express
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+volumes:
+  mongo-data:
+    driver: local //indicating that data will stored in locally different for differnet os.
+
+
+
+
+
+Image:  Is a every file and just enough OS to run a application.
+Images can be accessed from imageName and version or image id
+
+docker ps -l ==> last running container  Image from container. docker run image docker commit containeId ==> creats image from container ID so changes are present as image
+  o/p sha id of image which is of 256 bits
+docker tag shaID tagname (our wish)  or docker commit containerName newImageName. ==> to create a new image in single command  docker run
+
+docker run  —rm  -it image sleep 5;==> run something in container and delete it. sits for 5 seconds and exit. dokcer run -it image bash -c “sleep 3; echo all done” ==> starts the contianer do bash command inside it , then echo the result.  docker  run -d -it image Name bash. ==> run in detached mode docker attach containerName  ==> well jump into the container. , ctrl+p ctrl+q detach from container  memory: docker ru n —memory maximumAllowed memory docker run —cpu-shares relative to other containers
+docker run —cpu-quota to limit it in general
+
+
+docker run -it -v myfolder path in my machine:/folderpath in container ImageName command ==>to use volumes 
+docker run -it -v /shared-data image bash ==> it creates container and voulme ==> to use above volume in other contsiner docker run -it —volumes-from other containerName image command
+
+
+
+To Remove Container:
+
+docker container rm containerNamer or id
+
+To Remove Image
+
+docker image rmi imageName or Id
+
+
+EntryPoint:
+ENTRYPOINT langcommand file 
+# Replacement of CMD 
+CMD[“langcommand”, file]
+
+#  CMD argument will be replaced if process give by user 
+# entrypoint can't be replaced even if process given by user
+
+
+
+
+VOLUMES:
+
+docker volume create rchamant1
+
+docker run -itd --name rchamant1122 -v rchamant1:/mnt/data:rw alpine docker run -itd —name imageName -v hostVolumeLoation:folder/path/insideDocker:read-write access image
+

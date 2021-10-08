@@ -1,0 +1,268 @@
+KUBERNETES - GREEK WORD 
+
+HELMSMAN OR CAPTAIN
+K9S - LATEST
+K8S - CURRENT
+
+CONTAINER ORCHESTRATION ENGINE 
+
+CONTAINER MANAGEMENT TOOL 
+
+DOCKER - GOOGLE 
+KUBERNETES - GOOGLE 
+
+
+GOLANG 
+
+OPENSOURCE 
+
+
+ADVANTAGES 
+
+Automates deployment 
+Scaling 
+Manages containerized apps
+Load balancing 
+Storage Orchestration
+Self healing 
+Rollbacks and Rollouts 
+Secret and Config Management 
+Batch execution 
+Horizontal Scaling 
+Monitoring 
+
+
+
+
+Container Management Tools 
+
+Kubernetes 
+Docker Swarm 
+Apache Mesos - marathon  
+
+KEYWORDS
+——————
+
+NODE
+POD
+CONTAINER
+
+Batch Execution 
+
+Seq
+Parallel 
+
+
+Horizontal Scaling 
+
+Replication Controller 
+ReplicaSets
+
+
+Nodes can be 
+
+Physical Machine 
+Virtual Machine 
+VM on Cloud 
+
+
+
+Kubernetes capacity 
+
+No more than  - 5000 Nodes, 150000 pods, 300000 containers
+
+No more than 100 pods per node 
+
+
+4 components of master node 
+———————————————
+
+1. API Server
+2. Scheduler
+3. Controller manager 
+4. Etcd 
+
+API SERVER
+—————-
+
+Communicate with one another applications
+Front-end 
+Exposes api for each operations 
+Interact with kubernetes cluster 
+
+Control Manager 
+————————
+
+Kube Controller Manager 
+Cloud Controller manager 
+
+
+
+Kube controller manager 
+
+1. Node Controller - notices and responds when nodes goes down 
+2. Replication Controller - maintain correct count of pods for every replication 
+3. EndPoints Controller - joins services and pods 
+4. Service Accounts and token controller  - create default accounts and API access tokens for new namespaces.
+
+
+ 
+Cloud Controller manager 
+
+1. Node Controller 
+2. Route Controller 
+3. Service controller 
+4. Volume controller 
+
+
+—cloud-provider 
+
+
+Worker Node components 
+1. Kubelet
+2. Kube-proxy
+3. Container runtime 
+
+
+
+
+Kubernetes Dashboard 
+Monitoring 
+Logging 
+DNS
+
+
+
+
+Kubernetes Installation 
+———————————
+
+12GB RAM Required 
+
+4GB - base OS
+VMware - 512MB
+UBUNTU- 4GB
+WORKER NODE - 4 GB
+
+HDD - 40GB Free Space 
+
+
+Minimum 4 cores required 
+
+WE USE ONE MASTER AND 2 WORKERS ARCHITECTURE 
+
+Step 1 
+
+Create 3 images of ubuntu  run on different ipaddress and network to be “bridge”
+
+System names 
+
+Ubuntu-Master - 192.168.1.101
+Ubuntu-Worker1 - 192.168.1.102
+Ubuntu-Worker2 - 192.168.1.103
+
+
+Sudo hostnamectl set-hostname Ubuntu-Master - in first system
+
+Sudo hostnamectl set-hostname Ubuntu-Worker1 - in second system
+
+Sudo hostnamectl set-hostname Ubuntu-Worker2 - in Third system
+
+
+
+Step 2
+
+IN ALL MACHINES 
+
+sudo apt-get update 
+
+Sudo apt-get install docker.io
+
+
+docker —version
+
+Enable the docker service 
+
+Sudo su 
+
+Systemctl ebable docker 
+
+Systemctl start docker 
+
+Systemctl status docker 
+
+
+Step 3
+
+IN ALL MACHINES 
+
+
+Curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add
+
+
+
+Step 4
+
+
+IN ALL MACHINES 
+
+
+
+Add Kubernetes repo
+
+Sudo apt-add-repository “deb http://apt.kubernetes.io/kebernetes-cenial main”
+
+
+Sudo apt-get install kubeadm kubelet kubectl
+
+Sudo apt-mark hold kubeadm kubelet kubectl 
+
+
+
+Wait for 10 mins 
+
+Kubeadm version 
+
+Sudo swap off -a  (IN ALL MACHINES )
+
+Step 5
+
+IN Ubuntu-Master Machine 
+
+
+Sudo kubeadm init —pod-network-cidr=10.244.0.0/16
+
+It will display kubeadm join (KEEP BACKUP OF THE STATEMENT)
+
+Mkdir -p $HOME/.kube
+
+
+Sudo cp -I /etc/kubernetes/admin.conf $HOME/.kube/config
+
+
+Sudo chown $(id -u):$(id -g) $HOME/.kube/config
+
+Sudo kubectl apply https://raw.githubusercontent.com/coreos/flannel/master/Documentation/kube-flannel.yml 
+
+Kubectl get pods —all-namespaces 
+
+
+Step 6
+
+IN ALL WORKER MACHINES 
+
+Copy back up kubeadm join command fully with given parameter 
+
+Run in all worker machines 
+
+
+COME BACK TO MASTER MACHINE 
+
+Kubectl get nodes 
+
+
+
+
+
+
+ 

@@ -147,3 +147,10 @@ Difference is that using loadbalance creating external loadbalancer serive, mana
 and configuring it will be entirely automated, and it works usually in OKE,AKE,GKE
 In Nodeport Developer has to create external loadbalancer, configuring and manging it 
 is completly need to be done by developer
+
+
+
+
+#command to see secret file passwords.
+kubectl describe secret secrename -n secreteaccountName
+kubectl  describe   secret  kubernetes-dashboard-token-29fxh  -n  kubernetes-dashboard
