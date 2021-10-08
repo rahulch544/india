@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels:
+    run: rahuljavaapp
+  name: rahuljavaapp
+spec:
+  containers:
+  - image: rahulch123/tomcat:oracleappv1
+    name: rahuljavaapp
+    ports:
+    - containerPort: 8080
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: rahulsvc1
+  name: rahulsvc1 # Name of service
+spec:
+  ports:
+  - name: 1312-80
+    port: 1312 # service ip will be bounded with this
+    protocol: TCP
+    targetPort: 8080 # target app pod port number
+  selector: # pod finder using label for pod
+    # app: rahulsvc1
+    run: rahuljavaapp
+  type: NodePort
+status:
+  loadBalancer: {}

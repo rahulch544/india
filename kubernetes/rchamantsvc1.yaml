@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: rahulsvc1
+  name: rahulsvc1 # Name of service
+spec:
+  ports:
+  - name: 5544-80
+    port: 5544 # service ip will be bounded with this
+    protocol: TCP
+    targetPort: 80 # target app pod port number
+  selector: # pod finder using label for pod
+    # app: rahulsvc1
+    run: rchamantpod1
+  type: NodePort
+status:
+  loadBalancer: {}

@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: rahulk8s1
+---  
+apiVersion: v1
+kind: Pod
+metadata:
+  name: rahulk8po
+  labels:
+    app: ubuntu
+  namespace: rahulk8s1
+spec:
+  containers:
+  - image: ubuntu
+    command:
+      - "sleep"
+      - "604800"
+    imagePullPolicy: IfNotPresent
+    name: ubuntu
+  restartPolicy: Always
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: rchamantsvc1
+  name: rchamantsvc1 # name of service 
+  namespace: rahulk8s1
+spec:
+  ports:
+  - name: 5544-80
+    port: 5544 # service IP will be bounded with this 
+    protocol: TCP
+    targetPort: 80 # target app pod port number
+    nodePort: 30132
+  # selector: # pod finder using label for pod
+  #   run: rchamantpod2  
+  type: NodePort # type fo service
+status:
+  loadBalancer: {}
+

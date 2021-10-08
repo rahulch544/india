@@ -1,0 +1,149 @@
+ #command for checking yaml sytnax
+kubectl apply -f rchamant.yaml --dry-run=client
+
+ #command for starting pod
+kubectl apply -f rchamant.yaml
+
+ #command for getting all pods running details
+kubectl get po or pod or pod
+
+ #command for getting respective pods running details
+kubectl get po podname
+
+ #command for  getting more info regarding pod 
+kubectl get po rchamantpod1 -o wide
+
+ #command for seeing complete info about pod 
+kubectl describe pod rchamantpod1
+
+#command for getting stream logs for
+kubectl logs -f rchamantpod1
+
+ #access to pod, like entering into pod
+kubectl exec -it podname -- commandName
+eg:kubectl exec -it rchamantpod1 -- sh
+
+ #command to delete node or pod
+kubectl delete node NodeName
+kubectl delete pod podname
+
+ #To copy a file from the local file system to a container,
+ #run the command for Docker container or Kubernetes pod, respectively:
+https://support.sitecore.com/kb?id=kb_article_view&sysparm_article=KB0383441
+
+docker cp <src-path> <container>:<dest-path> 
+kubectl cp <src-path> <your-pod-name>:<dest-path>  
+
+eg:
+docker cp "C:\ProcDump\procdump64.exe" sitecore-xm1_cm_1:"C:\" 
+kubectl cp "C:\ProcDump\procdump64.exe" k8s-xm-cm-pod:procdump64.exe
+
+
+ #To copy a file from the container to the local file system
+docker cp <container>:<src-path> <local-dest-path> 
+kubectl cp <your-pod-name>:<src-path> <local-dest-path> 
+
+ # command to get yaml file using run command with dry command
+kubectl  run  ashuwebpod1  --image=dockerashu/nginx:5thoct2021  --port  80 --dry-run=client     -o yaml
+
+ # command to get yaml file using run command with dry command and store it in local machine
+kubectl  run  ashuwebpod1  --image=dockerashu/nginx:5thoct2021  --port  80 --dry-run=client     -o yaml > fileName.yaml
+
+ #command to create and start pod directly in single command and store the yaml file also
+kubectl  run  rchamantpod2  --image=dockerashu/nginx:5thoct2021  --port  80     -o yaml >rchamant_nginx.yaml 
+
+ #command to create service file using command and store the file 
+kubectl  create   service  nodeport  rahulsvc1  --tcp 5544:80  --dry-run=client -o yaml > rchamantsvc1.yaml
+
+ # rchamantsvc1.yaml for services
+
+ #rchamantfinalapp.yaml for advance service in node
+
+
+ # command to see services running in kubernetes.yaml
+kubectl get svc
+
+ # command to delete pods 
+kubectl delete pods all
+
+ #command to delete all nodes 
+kubectl delete nodes all
+
+ # command to delete all pods and services and nodes that
+kubectl delete all --all services
+
+
+
+
+Study Platforms:
+
+https://killer.sh/
+
+https://www.katacoda.com/courses/container-runtimes
+
+https://kubernetes.io/ -- exam guide and allowed Url in exam also
+
+
+
+Guide for kuberentes installation
+
+https://github.com/redashu/k8s/
+
+https://www.youtube.com/watch?v=TTzbQdu30YA&t=20s
+
+https://www.youtube.com/watch?v=TTzbQdu30YA&t=20s
+
+
+Kubectl commands:
+
+ #command to get all clusters running in machine
+kubectl config get-contexts
+
+ #command to shift from one cluster to other cluster
+kubectl config use-context contextName
+
+#command to create to namespace to have security and isolation
+kubectl create namespace rahulns
+
+#command to see namespaces 
+kubectl git namspace/ns/namespaces
+
+#command to set namespace as default namespace:
+kubectl config set-context --current --namespace=rahulns
+kubectl get pod ==> will help in seeing namespace
+
+
+#command to create service on running pod only 
+ kubectl expose pod  rchamantwebpod1 --type NodePort --port 80 --name rchamantmysvc
+ kubectl expose pod podName --type NodePort --port applicationPort --name serviceName
+
+ #similarly we can expose replicas 
+ kubectl expose rc replicaname --type NodePort --port applicationPort --name serviceName
+
+#command to see replicas i
+ kubectl get rc 
+
+#command to show labels 
+kubectl get po --show-labels
+
+#command to scale up and down the pods
+kubectl scale rc rahulrc-1 --replicas=3
+kubectl scalre rc replicaName --replicas=numberOfPods
+
+
+#command to push to oracle cloud repostiory
+docker tag region/namespace/repostiory:ImagetagName image
+
+
+#command to replace existing one
+kubectl replace -f ocrapp.yaml --force
+kubectl repalce -f yamlfilename --force
+
+
+# Loadbalancer vs Nodeport
+
+Both provide same service.
+Difference is that using loadbalance creating external loadbalancer serive, managing 
+and configuring it will be entirely automated, and it works usually in OKE,AKE,GKE
+In Nodeport Developer has to create external loadbalancer, configuring and manging it 
+is completly need to be done by developer

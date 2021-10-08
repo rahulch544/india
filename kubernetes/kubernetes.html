@@ -1,0 +1,103 @@
+<p style="color:blue"> #command for checking yaml sytnax</p>
+kubectl apply -f rchamant.yaml --dry-run=client</p>
+</p>
+<p style="color:blue"> #command for starting pod</p>
+kubectl apply -f rchamant.yaml</p>
+</p>
+<p style="color:blue"> #command for getting all pods running details</p>
+kubectl get po or pod or pod</p>
+</p>
+<p style="color:blue"> #command for getting respective pods running details</p>
+kubectl get po podname</p>
+</p>
+<p style="color:blue"> #command for  getting more info regarding pod </p>
+kubectl get po rchamantpod1 -o wide</p>
+</p>
+<p style="color:blue"> #command for seeing complete info about pod </p>
+kubectl describe pod rchamantpod1</p>
+</p>
+#command for getting stream logs for</p>
+kubectl logs -f rchamantpod1</p>
+</p>
+<p style="color:blue"> #access to pod, like entering into pod</p>
+kubectl exec -it podname -- commandName</p>
+eg:kubectl exec -it rchamantpod1 -- sh</p>
+</p>
+<p style="color:blue"> #command to delete node or pod</p>
+kubectl delete node NodeName</p>
+kubectl delete pod podname</p>
+</p>
+<p style="color:blue"> #To copy a file from the local file system to a container,</p>
+<p style="color:blue"> #run the command for Docker container or Kubernetes pod, respectively:</p>
+https://support.sitecore.com/kb?id=kb_article_view&sysparm_article=KB0383441</p>
+</p>
+docker cp <src-path> <container>:<dest-path> </p>
+kubectl cp <src-path> <your-pod-name>:<dest-path>  </p>
+</p>
+eg:</p>
+docker cp "C:\ProcDump\procdump64.exe" sitecore-xm1_cm_1:"C:\" </p>
+kubectl cp "C:\ProcDump\procdump64.exe" k8s-xm-cm-pod:procdump64.exe</p>
+</p>
+</p>
+<p style="color:blue"> #To copy a file from the container to the local file system</p>
+docker cp <container>:<src-path> <local-dest-path> </p>
+kubectl cp <your-pod-name>:<src-path> <local-dest-path> </p>
+</p>
+<p style="color:blue"> # command to get yaml file using run command with dry command</p>
+kubectl  run  ashuwebpod1  --image=dockerashu/nginx:5thoct2021  --port  80 --dry-run=client     -o yaml</p>
+</p>
+<p style="color:blue"> # command to get yaml file using run command with dry command and store it in local machine</p>
+kubectl  run  ashuwebpod1  --image=dockerashu/nginx:5thoct2021  --port  80 --dry-run=client     -o yaml > fileName.yaml</p>
+</p>
+<p style="color:blue"> #command to create and start pod directly in single command and store the yaml file also</p>
+kubectl  run  rchamantpod2  --image=dockerashu/nginx:5thoct2021  --port  80     -o yaml >rchamant_nginx.yaml </p>
+</p>
+<p style="color:blue"> #command to create service file using command and store the file </p>
+kubectl  create   service  nodeport  rahulsvc1  --tcp 5544:80  --dry-run=client -o yaml > rchamantsvc1.yaml</p>
+</p>
+<p style="color:blue"> # rchamantsvc1.yaml for services</p>
+</p>
+<p style="color:blue"> #rchamantfinalapp.yaml for advance service in node</p>
+</p>
+</p>
+<p style="color:blue"> # command to see services running in kubernetes.yaml</p>
+kubectl get svc</p>
+</p>
+<p style="color:blue"> # command to delete pods </p>
+kubectl delete pods all</p>
+</p>
+<p style="color:blue"> #command to delete all nodes </p>
+kubectl delete nodes all</p>
+</p>
+<p style="color:blue"> # command to delete all pods and services and nodes that</p>
+kubectl delete all --all services</p>
+</p>
+</p>
+</p>
+</p>
+Study Platforms:</p>
+</p>
+https://killer.sh/</p>
+</p>
+https://www.katacoda.com/courses/container-runtimes</p>
+</p>
+https://kubernetes.io/ -- exam guide and allowed Url in exam also</p>
+</p>
+</p>
+</p>
+Guide for kuberentes installation</p>
+</p>
+https://github.com/redashu/k8s/</p>
+</p>
+https://www.youtube.com/watch?v=TTzbQdu30YA&t=20s</p>
+</p>
+https://www.youtube.com/watch?v=TTzbQdu30YA&t=20s</p>
+</p>
+</p>
+Kubectl commands:</p>
+</p>
+<p style="color:blue"> #command to get all clusters running in machine</p>
+kubectl config get-contexts</p>
+</p>
+<p style="color:blue"> #command to shift from one cluster to other cluster</p>
+kubectl config use-context contextName</p>

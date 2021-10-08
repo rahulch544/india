@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  creationTimestamp: null
+  labels: # label of POD 
+    x: rchamantmysvc # any key: any value thing 
+  name: rchamantwebpod1 # name of POD 
+spec:
+  containers:
+  - image: dockerashu/nginx:5thoct2021 # docker hub image
+    name: rchamantwebpod1 # name of container 
+    ports: # nginx app server default port  optional field these days 
+    - containerPort: 80
+    resources: {}
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+status: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: rchamantsvc1
+  name: rchamantsvc1 # name of service 
+spec:
+  ports:
+  - name: 5544-80
+    port: 5544 # service IP will be bounded with this 
+    protocol: TCP
+    targetPort: 80 # target app pod port number
+  selector: # POD FINDer uisng label of POD 
+     x: rchamantmysvc # label of POD 
+
+  type: NodePort # type fo service
+status:
+  loadBalancer: {}
