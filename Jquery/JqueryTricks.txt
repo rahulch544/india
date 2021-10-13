@@ -1,20 +1,20 @@
 Jquery Tricks:
 
-Adding loading icon to input class Method 1:
+Adding loading icon to input classMethod 1:
 <input type="text"  id ="rchamant"/>
 
 .loading {
     background: url(http://www.xiconeditor.com/image/icons/loading.gif) no-repeat right center;
    background-size: 30px 30px;
 
-}  $(document).on('blur','input', function(e) {
+}$(document).on('blur','input', function(e) {
     var $t = $(e.currentTarget);
    $('#rchamant').removeClass('loading');
 
 });
 
 $('#rchamant').addClass('loading');
-  Method 2:
+ Method 2:
 Adding loading class to input class which is present inside componenetId tag
                 eg: <div or any id =“componentId”>
 		<span>—</span>
@@ -26,4 +26,3 @@ Adding loading class to input class which is present inside componenetId tag
 $(document).ready(function(){
                   $("#componentId").find("input").addClass("loadingList");
                 });
-  
