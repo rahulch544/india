@@ -1,0 +1,37 @@
+cliessentials.txt
+
+
+cd change-directory
+
+pwd present working directory
+ 
+ls list the contents
+ ls -a 
+ -a don't igonore files starting with .
+ -l  long listing
+  path  list files in given path
+
+cp copy content
+
+mv move command
+
+rm remove
+
+echo print
+
+cat concate
+
+less  -- equivalent to cat but in new window
+
+grep search
+
+mkdir to create directory
+
+touch create files
+
+chmod   change mode
+
+man + help 
+
+command --help 
+to get more details about comand
