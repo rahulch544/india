@@ -1,0 +1,25 @@
+Why Go Lang ?
+Infrastructure changed lot, 1. Multicore process 2. Cloud Infrastructure 3. Big Networking
+
+Scalable & Distributed , dynamic, More Capacity
+
+ requirement for GOLANG:
+
+ 1. To Support mulit threading 
+ 2. To prevent Concurrency
+ 3. Multiple users updating the same process
+
+ Bulit In Concurrency Lang: C++, Java, GO Language
+ Concurrency Mechanism is complex code and expesive and slow in c++ and Java code
+ Concurrency Mechanism is cheap and easy in go and was designed to run on multiple cores.
+
+ Main Use case:Performance, scalability application:
+
+ Go Lang is like : Python readable syntax and performance like c++ 
+
+ Go Lang is on backend language,
+
+ Go Lang is fast at built and run time and requires less resource.
+ Faster compliation. -> complies into single binary code file.
+ 
+

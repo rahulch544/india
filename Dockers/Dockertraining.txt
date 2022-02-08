@@ -1,0 +1,18 @@
+Dockers training OCT-5-8
+Usefull Links:
+Single click URL to join Zoom:
+https://oracle.zoom.us/j/98935296316?pwd=aVEvbkZvTlZWWWNmWnlPNFFXbVpCdz09
+You can reach me at 91-9845667577
+Class Notes:https://github.com/redashu/oracle4thoct2021/tree/day1
+Installation Guide:
+https://hub.docker.com/editions/community/docker-ce-desktop-mac
+
+Instructor remote machine credentials:
+UserName  rahul
+Password: DockerK8s088
+Ip Address: 18.210.201.228ssh rahul@18.210.201.228
+
+
+
+Docker commands:
+
