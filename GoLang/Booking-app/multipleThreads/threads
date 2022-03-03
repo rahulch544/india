@@ -1,0 +1,18 @@
+add "go" infront of string from where thread needs to break;
+
+WaitGroup, to wait until the thread is completed ,needs to be imported from sync 
+
+import{
+    "sync"
+}
+
+var wg = sync.WaitGroup
+
+Sets the number of go routinesto wait for
+ .(increase the counter by the provided number)
+wg.Add(1) 
+
+wait : blocks until the waitGroup counter 0
+wg.wait()
+
+wg.Done()

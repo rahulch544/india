@@ -23,3 +23,30 @@ Scalable & Distributed , dynamic, More Capacity
  Faster compliation. -> complies into single binary code file.
  
 
+ Go Discovers erros at complie time
+
+ Go indentifies infinite loops also
+
+
+ Functions which needs to exported the first letter of fcn name should Capital,
+ Similar to export variables they should be started with a capital letter 
+
+ Package name of function to be be added in impot to use that function
+
+
+3 Level scopes
+
+Local Scope: Intiated Inside loops or function or blocks
+Package Scope: declartion outside of loops or function
+Global Scope: variables declared inside package with Captial letter at start.
+
+
+go threads: thread
+Green thread, is abstraction of an actual thead, 
+managed by the go run time we are only interacting with thse high level goroutines., 
+cheaper and lightweight, It does not affects performance,
+with channels go can comminuncate between threads
+
+Whereas Java theads:PerformanceManaged by kernal ,
+ are hardware depenedent, cost of threads are hugher and higher start up time
+
