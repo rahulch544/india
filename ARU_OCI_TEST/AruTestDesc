@@ -1,0 +1,91 @@
+Series Creation
+ Case 1: Create New Series Mode
+Series Created ARU TEST Database Release Update 19.13.0.0.0
+
+Series is  created by copying some part of data from existing series : ARU TEST Database Release Update 19.0.0.0.0
+
+Added required Content request products
+ Types 3:
+ 1. Without comp criteria
+ 2. With comp criteria as IN
+ 2. With comp criteria as NOT IN
+
+ Added  tracking bug specification
+ 5, RDBMS
+
+ Added Request tags
+
+ Added Series attributes of Boolean type.
+
+ Added release attributes of Boolean.
+
+ Added request attributes of Boolean, LOV, Free-form type & additional added help text also.
+
+ Post series creation:
+ Received a mail.
+ Url present in mail is throwing an error 400 Bad Request.
+ The plain HTTP request was sent to HTTPS port
+ Issue is with url needs to be htpps
+  http://aru.oraclecorp.com:8080/ARUForms/BackportCLIAdmin/process_form?action_type=view_series&series_release=ARU+TEST+Database+Release+Update+19.13.0.0.0&mode=&series_mode=&is_admin=true&activate_appr=yes.
+
+Activated series by visting above URL after http->https conversion
+ 
+ Case 2:
+  Created a series with copy mode.
+  	ARU TEST Database Release Update 19.14.0.0.0
+
+Release creation:
+1. Created a release under series ARU TEST Database Release Update 19.13.0.0.0
+	ReleaseName ARU TEST Database Release Update 19.13.0.0.0
+	ReleaseVersion: 	19.13.0.0.0ARUTESTDBRU
+
+	Updated to codeline setup and observed Generic platform release labels are getting added.
+	Faced issue in updating release to codeline open
+
+    Error in updating release. Error in creating tracking bug for ARU TEST Database Release Update 19.13.0.0.0 Bug 33591592: Unexpected error in Validate_head
+    Same from backend:
+    Error report -
+ORA-20001: Error in updating release. ORA-20001: Error in creating tracking bug for ARU TEST Database Release Update 19.13.0.0.0 ORA-20001: ORA-20001: Bug 33591594: Unexpected error in Validate_head
+ORA-06512: at "ARU.ARU_ERROR", line 45
+ORA-06512: at "ARU.ARU_CUMULATIVE_REQUEST", line 9397
+ORA-06512: at line 5
+
+
+2. Dummy request has been created on ARU TEST Database Release Update 19.13.0.0.0 series
+   Approval screen
+
+
+
+
+Rest Features:
+1. Get MASK CPM BUGS view type only
+https://aru.oraclecorp.com/ARUForms/CPMRestAPIs/mask_cpm_bugs?version=12.2.0.1.0DBRU&list=Y
+Response:
+ {
+           "error": "",
+           "masked_bugs": "32038276 ,28758697",
+           "masked_cpm_req": "1106178 ,1106003"
+         }
+2.get_patch_content
+https://aru.oraclecorp.com/ARUForms/CPMRestAPIs/get_patch_content?patch_number=33585233
+Working fine
+
+ Quick query:
+ Tried to search for CPM thrown a empty page with 
+
+ No such file or directory : /d2/aruweb/webdocs/search/index.idx
+ Your search cpm did not match any documents.
+
+ Tested other existing URLS it is working fine    
+
+ 3. get_previous_patches 
+ https://aru.oraclecorp.com/ARUForms/CPMRestAPIs/get_previous_patches?tracking_bug=30820785&platform_id=226&patch_mode=NON_CD 
+
+ Direct Links /verify Links:
+ Opened all pages with my resp under aru, no issues found
+
+ Responsibility access/request pages
+ Working fine
+
+
+

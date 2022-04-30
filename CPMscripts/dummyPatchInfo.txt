@@ -1,0 +1,162 @@
+
+=> SPB Patch 1 (ARU 1 and ARU 2)
+   --> Internally the special ARU has to be created and added
+
+=> Patch 1 (ARU 1, ARU 2, Special ARU 1)
+   -> You read the .txt details from the series/release information
+
+=> Patch 2 (ARU 1, ARU 2, Special ARU 2)
+   -- Special ARU 2 = Special ARU 1 + Content specific to Patch 2
+   --> You read the .txt details from the series/release information
+
+
+
+Special ARU to be created automatically:
+.txt content
+
+--> Location -> Post installation at customer site where this file should be placed on customer env
+--> Permission
+--> OUI component
+--> Minimum Opatch version
+--> OPack version 
+--> BUG_NUMBER
+
+
+
+.txt content ->
+
+1. What are the rules to generate this dynamically ?
+
+Series (special ARU):
+      Releases 1: Jan'22 - WLS SPB 12.2.1.3.220118
+      Releases 2: Oct'22 - WLS SPB 12.2.1.3.221020
+
+
+      Jul'21 - WLS SPB 12.2.1.3.210719
+
+1. Check for N-1, we get a previous release
+2. Check if the N-1 has the special patch (stop it there)
+
+1. Special ARU 1: Jan 22
+2. Provide the special aru 1 in the series configuration
+3. Download special aru 1 and update and create a special aru 2
+
+
+ (Starting point)
+
+ Opack
+
+.txt file (Remote workarea NAS)
+.tmpl file --> Input to opack
+   Action will be copy COPY_LIST = {jlib:md/jlib/a.jar} 
+
+ARU must have bug number:
+Opack:
+   1. .tmpl file - template (Defines your deliverables and metadata for applying)
+      --> OUI component
+      --> Minimum Opatch version
+      --> OPack version 
+   
+   2. Workarea where the deliverables are present
+
+opack -t *.tmpl -d .
+   Output: .zip 
+ 
+   /etc/config/actions.xml copy_aciton  %ORACLE_HOME%//a.txt
+   /etc/config/inventory.xml
+   /location/*.txt
+
+upload 
+   PostProcess.pm
+   PostProcess (upload) -> In fixed ftpd internal (within oracle - TPM team has access for this)
+                        -> In fixed ftpd support (external) 
+
+
+SPB1-> {aru1,aru2,aru3,dumpatch1}
+Dummy Patch-> No actual content, Only one text file.
+                       -> Generic Patch.
+
+                       Patch needs to be created, => Done
+                       Opatchable => Done
+                       ARU (Checkin, aru ID) 
+
+SPB2 -> {aru1,aru2,aru3,dumpatch1}
+     -> {aru1,aru2,aru3,dumpatch2}
+
+
+
+    `/usr/local/packages/isd/bin/uploadcli upload --bug=<base bug> --login=<usr>/<pwd> --product_name='Oracle Appliance Kit' --release_name='Oracle 18.2.0.0.0' --platform_name='Linux x86-64' --language_code='US' --update_bugs='<pse bug>' --abstract="<>" --patch_type='Standalone Checkin' --dist_type='Not Distributed' --machine='<>' --file='<>' --ftp_username=<> --ftp_password=<> --comment='<>'`
+
+base bug => Dummypatch
+<usr>/<pwd> ==? Vinish
+product_name = Bug DB product release 
+release_name='Oracle 18.2.0.0.0' ==?
+platform_name='Generic'
+--update_bugs='<pse bug>' =>NULL
+abstract => BAse bug
+patch_type ='Cumulative' / 'Standalone Checkin'
+machine => 'slc10opu.' ==> Source file location  machine
+file => /scratch/file/path/
+ftp_username=apfmgr --OCI
+ftp_password=apfmgr_password --OCI
+comment ='Sample Content'
+
+
+https://aru.oraclecorp.com:8080/
+    User tab -> Password
+    Passwd reset would allow you to reset the ARU legacy passwd
+
+
+/usr/local/packages/isd/bin/uploadcli upload --bug=33794740  --login=rchamant/rchamant2 --product_name='Oracle Business Intelligence Enterprise Edition' --release_name='Oracle Analytics Server 12.2.6.1.0' --platform_name='Generic Platform' --language_code='US' --update_bugs='33794740' --abstract='WLS SPB TRACKING INFORMATION IN SPB2' --patch_type='Standalone Checkin' --dist_type='Not Distributed' --machine=rchamant.auto.susengdev2phx.oraclevcn.com --file='/scratch/rchamant/33794695.zip' --ftp_username=rchamant --ftp_password=Luhar1201@ --comment='rchamant uploaded this patch using apfcli'    --upload_user=rchamant 
+
+
+/usr/local/packages/isd/bin/uploadcli obsolete --login=rchamant/rchamant2       \
+                       --bug=33794695                       \
+                      --product_name='Oracle Business Intelligence Enterprise Edition' \
+                       --release_name='Oracle Analytics Server 12.2.6.1.0' \
+                       --platform_name='HP-UX PA-RISC (32-bit)'       \
+                       --language_code='US'              \
+                       --comment='Obsoleting patch'
+
+/usr/local/packages/isd/bin/uploadcli upload \
+--bug=33819540 \
+--login=rchamant/rchamant2 \ ==> (apfmgr/arufroms)
+--product_name='Oracle Business Intelligence Enterprise Edition' \
+--release_name='Oracle Analytics Server 12.2.6.1.0' \
+--platform_name='Generic Platform' \
+--language_code='US' \
+--update_bugs='33819540' \
+--abstract='WLS SPB TRACKING INFORMATION IN SPB3' \
+--patch_type='Standalone Checkin' \
+--dist_type='Not Distributed' \
+--machine=slc15zdx.us.oracle.com \
+--file='/scratch/rchamant/33819540.zip' \
+--ftp_username=rchamant \
+--ftp_password='Luhar1201@' \
+--comment='rchamant uploaded this patch using apfcli' \
+--upload_user=rchamant \
+--verbose=debug
+
+
+/usr/local/packages/isd/bin/uploadcli upload --bug=33819540 --login=rchamant/rchamant2 --product_name='Oracle Business Intelligence Enterprise Edition' --release_name='Oracle Analytics Server 12.2.6.1.0' --platform_name='Generic Platform' --language_code='US' --update_bugs='33819540' --abstract='WLS SPB TRACKING INFORMATION IN SPB3' --patch_type='Standalone Checkin' --dist_type='Not Distributed' --machine=rchamant.auto.susengdev2phx.oraclevcn.com --file='/scratch/rchamant/33819540.zip' --ftp_username=rchamant --ftp_password='Luhar1201@' --comment='rchamant uploaded this patch using apfcli' --upload_user=rchamant --verbose=debug
+
+
+
+/usr/local/packages/isd/bin/uploadcli upload 
+--bug=33819540 --login=rchamant/rchamant2 --product_name='Oracle Business Intelligence Enterprise Edition' --release_name='Oracle Analytics Server 12.2.6.1.0' --platform_name='Generic Platform' --language_code='US' --update_bugs='33819540' --abstract='WLS SPB TRACKING INFORMATION IN SPB3' --patch_type='Standalone Checkin' --dist_type='Not Distributed' --machine=slc15zdx.us.oracle.com --file='/scratch/rchamant/prod/testArea/dummypatch/33819540.zip' --ftp_username=rchamant --ftp_password='Luhar1201@' --comment='rchamant uploaded this patch using apfcli' --upload_user=rchamant --verbose=debug
+
+
+#
+# OCI Config parameter for OSS Download
+#
+$oss_oci_config =
+ {
+  tenancy_ocid => 'ocid1.tenancy.oc1..aaaaaaaa3xlolnkkgbndddko2mdg535moze43vh4bpmdcbopi5gmkastlb2q',
+  user_ocid => 'ocid1.user.oc1..aaaaaaaambpbpfk6opyzns5qnxv2l4npf7rjsq6tywdo37gjwcytbgdr5e5a',
+  private_key_path => '/home/kvvallur/pem/corp_login_idcs_PBUILD-USER_WW-03-22-06-00.pem',
+  finger_print => '15:0a:8d:a7:e2:bf:bd:a5:93:6b:7e:22:a5:d2:61:a8',
+  proxy => '',
+  namespace => 'idghdmhafadh',
+  bucket => 'BUK-IAD-DEVAPP-ARURL-PATCHREPO',
+  oss_rest_api_host => 'objectstorage.us-ashburn-1.oraclecloud.com'
+ };

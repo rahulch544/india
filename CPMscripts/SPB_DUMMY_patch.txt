@@ -1,0 +1,90 @@
+
+=> SPB Patch 1 (ARU 1 and ARU 2)
+   --> Internally the special ARU has to be created and added
+
+=> Patch 1 (ARU 1, ARU 2, Special ARU 1)
+   -> You read the .txt details from the series/release information
+
+=> Patch 2 (ARU 1, ARU 2, Special ARU 2)
+   -- Special ARU 2 = Special ARU 1 + Content specific to Patch 2
+   --> You read the .txt details from the series/release information
+
+
+
+Special ARU to be created automatically:
+.txt content
+
+--> Location -> Post installation at customer site where this file should be placed on customer env
+--> Permission
+--> OUI component
+--> Minimum Opatch version
+--> OPack version 
+--> BUG_NUMBER
+
+
+
+.txt content ->
+
+1. What are the rules to generate this dynamically ?
+
+Series (special ARU):
+      Releases 1: Jan'22 - WLS SPB 12.2.1.3.220118
+      Releases 2: Oct'21 - WLS SPB 12.2.1.3.211020
+
+
+      Jul'21 - WLS SPB 12.2.1.3.210719
+
+1. Check for N-1, we get a previous release
+2. Check if the N-1 has the special patch (stop it there)
+
+1. Special ARU 1: Jan 22
+2. Provide the special aru 1 in the series configuration
+3. Download special aru 1 and update and create a special aru 2
+
+
+ (Starting point)
+
+ Opack
+
+.txt file (Remote workarea NAS)
+.tmpl file --> Input to opack
+   Action will be copy COPY_LIST = {jlib:md/jlib/a.jar} 
+
+ARU must have bug number:
+Opack:
+   1. .tmpl file - template (Defines your deliverables and metadata for applying)
+      --> OUI component
+      --> Minimum Opatch version
+      --> OPack version 
+   
+   2. Workarea where the deliverables are present
+
+opack -t *.tmpl -d .
+   Output: .zip 
+ 
+   /etc/config/actions.xml copy_aciton  %ORACLE_HOME%//a.txt
+   /etc/config/inventory.xml
+   /location/*.txt
+
+upload 
+   PostProcess.pm
+   PostProcess (upload) -> In fixed ftpd internal (within oracle - TPM team has access for this)
+                        -> In fixed ftpd support (external) 
+
+
+
+
+.tmpl file creation for Dummy patch file
+
+
+TEMPLATE_FILE_VERSION="1.0.0"
+BASE_BUGS={"bugnum:bug-description",}
+PATCHSET_EXCEPTION_NUMBER=<base-bug-num>
+PLATFORMS={0}
+BASE_DIR="./"
+ONLINE_RAC_INSTALLABLE=true
+INSTANCE_SHUTDOWN=false
+MINIMUM_OPATCH_VERSION="12.2.0.1.25"
+[Actions]
+COMPONENT="component name:component version:O"
+Followed by actions

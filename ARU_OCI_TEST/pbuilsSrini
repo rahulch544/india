@@ -1,0 +1,7 @@
+1.from your  dev environment  run this sql connected to aru/aru
+    a. /scratch/rchamant/prod/test_repo/isd/log/get_location.sql. , at the prompt enter ARU# . this will return location_id, location_path and file_name
+2. login as arudev/arudev ( unix login ) to your host slc15zdx.us.oracle.com and mkdir -p <location_path from previous step>
+3. download the patch from production and copy it to <location_path from step 1.a>
+4. SQLplus to aru/aru  and run the script
+5. /scratch/rchamant/prod/test_repo/isd/log/upd.sql , enter <location_id from step1.a>. . This is updating the patch location to use slc15zdx.us.oracle.com
+retry failed request or submit  a new request

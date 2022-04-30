@@ -1,0 +1,44 @@
+ABOUT SERIES->(5 RDBMS) ( Series -> one year)
+ Parent --> Products,  Series Conifuguration, Request
+ --> WE CAN REQUEST only
+
+        -->wls bug, tpm fix (Base BUG -> Actual fix)
+        --> Progress
+
+    -->ABOUT RELEASE UPDATES (4months)
+        --> Base BUG -> Release ->approved
+
+Series -> requested
+        -> Release -1 {100fixes} approved
+            -> approved code merged
+                ->APF created zip (Patch available qa)--> Bug tags
+                        -> Released
+
+        -> Release -2 {Release -1 + 100 new fixes}
+            -> Release update Revisons {4 security importance}
+
+        -> Release - 4 (All)    
+
+Naming Convention: (DB Releases)
+       Series-> Database Release Updates 19.0.0.0.0 (7000)
+            Release -> 19.1.0.0.YYMMDD
+                Release Update Revison -> 19.1.1.0.YYMMDD
+                Release Update Revison -> 19.1.2.0.YYMMDD
+
+
+Naming Convention: (FMW Releases) (Continous dated Releases)
+       Series-> FMW Release Updates 12.1.0.0.0
+            Release1 -> 12.1.0.0.YYMMDD
+            Release2 -> 12.1.0.0.YYMMDD
+            Release2 -> 12.1.0.0.YYMMDD
+
+
+
+Content Creation:-
+        On Series we can request content requested (Base Bug, series,Customer)
+         DB 19,20,21
+         OCW 19, 20, 21
+
+            --> requested for DB, OCW 
+                ==> backport Bugs (approved)
+            -> Must be approved for released

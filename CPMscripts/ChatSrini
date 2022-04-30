@@ -1,0 +1,512 @@
+
+
+Rahul Chamanthula  8:54 PM
+Hi Srini, Good-morning,
+Will it be possible for you to have call IST morning, regarding pbuild issue in my oci env.
+
+Srinivas Balabhadra  8:58 PM
+sure Rahul.
+:+1:
+1
+
+9:00
+move it to 10:30 pm PDT / 11am IST
+
+Rahul Chamanthula  9:00 PM
+Sure
+
+Srinivas Balabhadra  9:00 PM
+thanks
+
+Rahul Chamanthula  9:01 PM
+Thank you
+
+Srinivas Balabhadra  11:55 AM
+Hi Rahul
+
+Rahul Chamanthula  11:55 AM
+Hi Srini
+
+Srinivas Balabhadra  11:55 AM
+do you want to start the zoom ?
+
+Rahul Chamanthula  11:56 AM
+https://oracle.zoom.us/j/97413395245?pwd=WXpmL3ZTM05sNGErbVhwdGJDYTkxZz09
+11:56
+Please join using above URL
+
+Srinivas Balabhadra  11:58 AM
+my zoom is spinning
+11:59
+couple mins
+
+Rahul Chamanthula  11:59 AM
+Sure
+
+Rahul Chamanthula  12:09 PM
+   ORA-02291: integrity constraint (ARU.ISD_AQ_SESSIONS_R1) violated - parent key not found
+     ORA-06512: at "ARU.ISD_AQ_SESSION", line 28
+     ORA-06512: at "ARU.ISD_AQ_SESSION", line 74
+     ORA-06512: at line 1 (DBD ERROR: OCIStmtExecute)
+
+Srinivas Balabhadra  1:01 PM
+Rahul, can. u please ping me the apfcli command again
+
+Srinivas Balabhadra  1:04 PM
+looks like when you started your forms server APF_DEBUG does not have bugdb in it. can u stop and restart with bugdb value in the variable
+:+1:
+1
+
+
+1 reply
+8 days agoView thread
+
+Srinivas Balabhadra  1:04 PM
+@rchamant
+
+Rahul Chamanthula  1:21 PM
+@here,
+Hi All,
+I am trying to run command related to Pbuild server, it is failing in OCI machine with following error message, whereas same command works in SLC machine.
+Request PSE: APF does not support requests for this BUGDB product: 1057
+Command: apfcli --label SPB_WLS_GENERIC_220321.023207 --cpm_series_name 'OAS Stack Patch Bundle 5.9.0.0.0' --type stackpatch --force
+Can you please share details to resolve this issue.
+1:21
+Hi Srini, You can use above command
+
+Rahul Chamanthula  10:27 AM
+Hi Srini, Good-morning,
+Small query, I have made necessary changes for SPB requirement,
+Want to confirm whether we require login credentials while running uploacli command from pbuild server as APFMGR user.
+
+Srinivas Balabhadra  11:41 AM
+can u ping me your changes ?, did the apfcli work or still issues ?
+
+Rahul Chamanthula  11:43 AM
+https://alm.oraclecorp.com/pls/#projects/pls/review/16170/changes?oi=isd/pm/APF/PBuild/StackPatchBundle.pm
+11:43
+Hi Srini,
+You can use following commit to get my changes,
+f3ac37c44b6a1e0dabd1898e064b323e80fa31f3
+11:44
+APFCLI still failed in OCI machine, I was able to work around running on SLC machine
+
+Srinivas Balabhadra  11:45 AM
+okay. using the same dbsprint  database ?
+
+Rahul Chamanthula  11:45 AM
+Yes Srini (edited) 
+
+Srinivas Balabhadra  11:45 AM
+:slightly_smiling_face:
+11:45
+okay
+11:46
+if the uploadcli runs as pbuild/apfmgr then  we have to create the cookie file.  if it runs on forms host as aruforms then the cookie is already set
+
+Rahul Chamanthula  11:48 AM
+It runs on PBUILD server.
+
+Srinivas Balabhadra  11:48 AM
+okay, before deploying we have to create the cookie file
+11:48
+when are you planning to deploy ?
+
+Rahul Chamanthula  11:49 AM
+This weekend if no issues found
+
+Srinivas Balabhadra  11:50 AM
+okay,  as what user are u going to upload ?
+
+Rahul Chamanthula  11:50 AM
+as APFMGR user.
+
+Srinivas Balabhadra  11:51 AM
+i mean not unix user,  ARU user
+
+Rahul Chamanthula  11:51 AM
+aru user as apfmgr user
+11:51
+ftp user details as arudev/arudev
+
+Srinivas Balabhadra  11:52 AM
+okay ,  due you have the credentials for apfmgr application account in ARU DB ?
+
+Rahul Chamanthula  11:53 AM
+--upload_user='apfmgr' --ftp_username="arudev" --ftp_password="arudev"
+
+Srinivas Balabhadra  11:53 AM
+okay,  are u going. to create the cookie using your account (rchamant) ?
+
+Rahul Chamanthula  11:54 AM
+I am not sure about cookie Srini
+
+Srinivas Balabhadra  11:54 AM
+okay. tomorrow let me talk to Neealm , will ping you
+11:55
+if generic account has the required privileges to login for uploadcli
+
+Rahul Chamanthula  11:56 AM
+Sure Srini.
+ From responsibility area, I will add Generic Upload Developer.. resp for this requirement to APFMGR user account. (edited) 
+
+Rahul Chamanthula  10:30 AM
+Hi Srini, Good-evening
+10:33
+Regarding Dummy patch, Requirement,
+You have mentioned that we need to create a cookies file in Pbuild server to run uploadcli command,
+Can you share this details Srini
+10:34
+I would like to make this deployment today evening, ( It does not require any bounce for servers).
+
+Srinivas Balabhadra  11:35 AM
+Hi Rahul, what you do is . login to one of the SLC host as apfmgr and run
+ /home/apfmgr/bin/uploadcli login
+userid/password enter your 8 character ARU id ( not sso ) and password
+check:
+ /home/apfmgr/bin/uploadcli loginstatus. .  if  the result shows success then you are all good
+
+Rahul Chamanthula  11:42 AM
+Srini,
+I should login as APFMGR user,
+But i should enter my login details not APFMGR, Because in code i am using param upload-user as APFMGR
+
+Srinivas Balabhadra  11:44 AM
+yes, your credentials. that’s fine. when you use upload-user the privileges are checked for that user and not the login user
+
+Rahul Chamanthula  11:47 AM
+{slc15zdx:rchamant:::12.1.0.2.0} /home/rchamant                                                                                                % sudo su - apfmgr
+Password:
+[apfmgr@slc15zdx ~]$ /home/apfmgr/bin/uploadcli login
+Enter your username: rchamant
+
+Enter your password:
+<result>
+ <error_message></error_message>
+ <success>1</success>
+</result>
+[apfmgr@slc15zdx ~]$
+ (edited) 
+
+Srinivas Balabhadra  11:47 AM
+run loginstatus
+
+Rahul Chamanthula  11:48 AM
+<result>
+  <error_message></error_message>
+  <logged_in>1</logged_in>
+  <success>1</success>
+  <username>rchamant</username>
+</result>
+11:48
+I ran this command on slc15zdx.us.oracle.com
+
+Srinivas Balabhadra  11:48 AM
+ok, it shows success right
+11:49
+now the login cookie for uploadcli is set
+
+Rahul Chamanthula  11:49 AM
+But Srini, Why i need to check with my credentials,
+In uploadcli command which i am trying to run, i have not given any credentials releated to me.
+
+Srinivas Balabhadra  11:49 AM
+you can run uploadcli upload commands
+11:50
+if no credentails are given then it looks for it in the cookie file in default location
+11:50
+which you verified it is fine by running loginstatus
+
+Rahul Chamanthula  11:51 AM
+So, Even if i not add login input param, with the only param upload-user=apfmgr,
+It still looks for any login is present in that cookies , then it uses that. (edited) 
+
+Srinivas Balabhadra  11:52 AM
+yes
+
+Rahul Chamanthula  11:52 AM
+Oh, great.
+11:53
+We don't require any cookie file for APFMGR user now  ?
+
+Srinivas Balabhadra  11:53 AM
+no
+
+Rahul Chamanthula  11:55 AM
+okay.
+Thanks Srini for confirmation.
+Srini, Regd:
+on_success functionality, you mentioned you will share sample functionality which i can use for SPB to cleanup space.
+11:55
+Or Should try extracting the inputs to on_success functionality using Dumper.
+
+Srinivas Balabhadra  11:56 AM
+one second,, let me give you the values that are available
+12:00
+these are available which will suffice for your use
+$self->{request}   hash has these values for example:
+{
+                ‘type_code’ => 80040,
+                ‘trigger_log_fh’ => bless( \*Symbol::GEN4224, ‘FileHandle’ ),
+                ‘application_name’ => ‘ST APF Patch Builder’,
+                ‘id’ => 56595826,
+                ‘req_status_file’ => ‘/net/slcnas629.us.oracle.com/export/ddr_se/apf/workarea/st_apf/work/56595826/req_56595826.running’,
+                ‘step_count’ => 1,
+                ‘notify_only_on_fail’ => 0,
+                ‘phase’ => 1,
+                ‘trigger_log_file’ => ‘/net/slcnas629.us.oracle.com/export/ddr_se/apf/workarea/st_apf/work/56595826/trigger.log’,
+                ‘error_message’ => undef,
+                ‘work_dir’ => ‘/net/slcnas629.us.oracle.com/export/ddr_se/apf/workarea/st_apf/work/56595826’,
+                ‘priority’ => ‘6999’,
+                ‘log’ => $VAR1->{‘dosyscmd’}{‘DOCMD_FILEHANDLE’},
+                ‘user_id’ => ‘5’,
+                ‘reference_id’ => ‘34013100’,
+                ‘_request_error_msg’ => ‘test: Install Test Failed: Max allowed install test requests (5) are already running on slc07aho.us.oracle.com at /home/apfmgr/pm/APF/PBuild/PBDaemon.pm line 6806.
+’,
+                ‘retry’ => ‘1’,
+                ‘user_name’ => ‘APF2’,
+                ‘grid_id’ => ‘APF_OEL7_PBUILD_GRID’,
+                ‘type_name’ => ‘APF Install Test’,
+                ‘notify_email_addr’ => undef
+               },
+12:01
+$self->{aru_dir}  will have the work directory, for ex: ‘/net/slcnas629.us.oracle.com/export/ddr_se/apf/workarea/st_apf/work/56595826’,
+12:02
+to get to the work directory i believe these will be sufficient
+
+Rahul Chamanthula  12:03 PM
+Yes Srini, and
+What is tis detail represent Srini
+‘reference_id’ => ‘34013100’,
+
+Srinivas Balabhadra  12:03 PM
+reference_id is the bug#
+
+Rahul Chamanthula  12:04 PM
+Want to understand, to identify SPB specific request.
+
+Srinivas Balabhadra  12:05 PM
+how are you determining it is an SPB in the first place to process the request
+
+Rahul Chamanthula  12:06 PM
+This is the input Srini which we gave,
+apfcli --label SPB_WLS_GENERIC_220326.123446 --cpm_series_name 'OAS Stack Patch Bundle 5.9.0.0.0' --type stackpatch --force
+
+Srinivas Balabhadra  12:07 PM
+can u ping me the request ID that got generated with this call
+
+Rahul Chamanthula  12:10 PM
+This is sample request from Production.
+For the bug: 34012964
+Request ID=56595158 
+Check the status of request at https://aru.oraclecorp.com/ARU/BuildStatus/process_form?rid=56595158 
+
+Srinivas Balabhadra  12:10 PM
+also this hash is available
+Untitled 
+self->{params} => {
+                               'GENPSUTEMPL' => '',
+                               'log_fh' => $VAR1->{'dosyscmd'}{'DOCMD_FILEHANDLE'},
+                               'MERGED_BUGS' => '',
+                               'ACTION' => 'test',
+Click to expand inline (63 lines)
+
+
+12:11
+which means $self->{params}->{label} will have “SPB_WLS_GENERIC_220326.123446”
+
+Rahul Chamanthula  12:13 PM
+Oh, Okay
+In that case, I can use naming convention and cross verify it.
+I am assuming will get series name also one of the Param.
+
+Srinivas Balabhadra  12:14 PM
+https://aru.oraclecorp.com/ARU/BuildStatus/process_form?error_url=&log=/net/adcnas483.[…]f1/st_apf/work/56595399/log/req_56595399_220329080615_1.log.  whatever is in “Request Parameters”  those parameters will be in $self->{params}
+
+Rahul Chamanthula  12:16 PM
+Running on grid APF_OEL6_VIRTUAL_GRID
+Request Parameters : BUG - 34012964 
+Request Parameters : USER_ID - 1779908 
+Request Parameters : ARU_NO -  
+Request Parameters : ACTION - request 
+Request Parameters : OUTPUT_DIR -  
+Request Parameters : LABEL - SPB_LINUX.X64_220329.074415 
+Request Parameters : FROM_LABEL -  
+Request Parameters : TXN -  
+Request Parameters : THIRD_PARTY - ##IDM Stack Patch Bundle 12.2.1.3.0 
+Request Parameters : TYPE - stackpatch 
+Request Parameters : PLATFORM_ID -  
+Request Parameters : PACKAGE - cumulative 
+Request Parameters : GRANULARITY - injection 
+Request Parameters : PAYLOAD - diff 
+Request Parameters : FIXED_BUGS -  
+Request Parameters : DEFAULT_USER -  
+Request Parameters : ADD_SRCFILE_LIST -  
+Request Parameters : BUNDLE_PREREQ_BUGS -  
+Request Parameters : FORCED_COLD -  
+Request Parameters : CD_CI_TXN -  
+Request Parameters : CD_REQ_STATUS -  
+Request Parameters : OVERWRITE_VERSION -  
+Request Parameters : FORCE - Y 
+12:16
+Above are params which i see in SPB logs,
+
+Srinivas Balabhadra  12:17 PM
+which means in $self->{params}->{type} will have stackpatch
+$self->{params}->{label} will have SPB_LINUX.X64_220329.074415
+12:17
+etc
+
+Rahul Chamanthula  12:18 PM
+Later we need to indentify for Upload status, Using ARU_No
+
+Srinivas Balabhadra  12:21 PM
+if you have failed request, you can go to that request_id/log directory and there will be pbdaemon_hash_<datetime>.lst  that’s the dump of PBDaemon object. you can check what information will be available for ex:
+/net/slcnas629.us.oracle/export/ddr_se/apf/workarea/st_apf/work/56595826/log/pbdaemon_hash_220329142604.lst
+12:22
+also $self->{aru_obj} will have the aru_object details.
+12:23
+if you have any other questions, type it in here and will respond in the morning PDT
+12:24
+look at the pbdaemon_hash file  as an example , it has all parameters that are available in PBDaemon self object
+
+Rahul Chamanthula  12:26 PM
+Sure Srini,
+pbdaemon_hash_<datetime>.lst approach , I am not clear from where we get this details,
+But i will look into the file and
+ i will also  check  aru-obj dump.
+
+Srinivas Balabhadra  12:27 PM
+in PBDaemon $self has those details
+12:28
+not sure what’s the confusion.
+12:29
+in that pbdaemon_hash_220329142604.lst file i pinged search for ‘aru_obj’ and it will have the details
+12:29
+you can ping me tomorrow PDT for any clarification.
+:+1:
+1
+
+
+Rahul Chamanthula  12:30 PM
+<datetime> ==> This value depends on time of log file generation at each run, So how to indentify this is the latest log ( Bytime stamp) if multiple logs are present.
+
+Srinivas Balabhadra  12:31 PM
+that’s just an example Rahul. you are not going to read the file
+12:31
+when you come into on_success or on_failure, the $self object has the parameters that are listed in the file
+12:32
+for ex: if I say. my $aru = $self->{aru_obj}->{aru} , the aru# will be retrieved
+12:32
+similarly    in on_success/on_failure, if i want the request_id ,, i will say
+my $request_id = $self->{request}->{id}. ( or $self->{request_id} ) etc
+
+Rahul Chamanthula  12:33 PM
+Now I understood Srini,
+It is Reference to see Self object Params, on which i should rely, (edited) 
+
+Srinivas Balabhadra  12:34 PM
+yes. that’s what i indicated when. i gave you the file to inspect
+
+Rahul Chamanthula  12:35 PM
+Thanks Srini,
+I am looking that file,
+Will try some test cases, Will contact you Srini if i face any challenges
+
+Srinivas Balabhadra  12:35 PM
+sure,  I am going to sign off now.
+
+Rahul Chamanthula  12:35 PM
+Sure, Goodnight Srini.
+
+Srinivas Balabhadra  12:36 PM
+take care. bye.
+
+Rahul Chamanthula  10:09 AM
+Hi Srini, Good-evening
+We have pushed dummy patch SPB changes into live yesterday,
+But Uploadcli command failed in SPB, want to understood do we need to add login details in command.
+I am not sure , slcnas629.us.oracle.com is the PBUILD server,
+From this machine i tried using uploadcli command with upload_user param as APFMGR.
+10:10
+We have verified last time cookies by me logging into a slc machine,
+But we are seeing issue that patch upload failied with following error.
+ Transport Error: 401 Unauthorized 
+
+<result>
+
+  <error_message>Transport Error: 401 Unauthorized</error_message>
+
+  <success>0</success>
+
+</result>
+ 
+
+Srinivas Balabhadra  11:29 AM
+did you create a cookie ?
+11:30
+slcnas629 is. a Storage server and not pbuild host
+
+Rahul Chamanthula  11:31 AM
+I have not created cookie Srini,
+Last time we checked that trying uploadcli login command from slc machine with user id.
+11:31
+Other than that we have not created any cookie
+
+Srinivas Balabhadra  11:32 AM
+without cookie how will it work. i told you that cookie has to be created. let me create and u can retry
+11:34
+what’s the request ID that’s failing
+
+Rahul Chamanthula  11:34 AM
+uploadcli upload --upload_user='apfmgr' --bug='34033367' --language_code='US' --update_bugs='34033367' --file='/net/slcnas629.us.oracle.com/export/ddr_se/apf/workarea/st_apf/work/56651077/34033367.zip' --comment='Uploading for 34033367' --product_name='Oracle Business Intelligence Enterprise Edition' --machine='slcnas629.us.oracle.com' --release_name='Oracle Analytics Server 5.9.0.0.0' --ftp_password='arudev' --ftp_mode='sftp' --platform_name='Generic Platform' --dist_type='Not Distributed' --abstract='Version Tracker for OAS 5.9.0.0.0 Stack Patch Bundle patch 34033269' --patch_type='Standalone Checkin' --ftp_username='arudev'
+
+Srinivas Balabhadra  11:35 AM
+from which host
+
+Rahul Chamanthula  11:35 AM
+This is the command Srini, which is failing
+11:36
+I am not exactly sure on which host,
+But this request is submitted from SPB code in aru prod.
+11:36
+Log file of SPB,
+https://aru.oraclecorp.com/ARU/BuildStatus/process_form?error_url=&log=/net/adcnas483.[…]f1/st_apf/work/56651077/log/req_56651077_220404101322_3.log
+
+Srinivas Balabhadra  11:36 AM
+give me the requestID
+11:36
+okay, will check
+
+Rahul Chamanthula  11:37 AM
+The patch which i am trying to upload directly gets uploaded, without any preprocessing or checkin.
+
+Srinivas Balabhadra  11:38 AM
+it got uploaded from SLC
+<result>
+ <aru>24715402</aru>
+ <bug>34033367</bug>
+ <comments>Patch has been successfully queued for Upload.</comments>
+ <error_message></error_message>
+ <links>https://aru.oraclecorp.com:8080/ARU/ViewPatchRequest/process_form?aru=24715402</links>
+ <product_name>Oracle Business Intelligence Enterprise Edition</product_name>
+ <release_name>Oracle Analytics Server 5.9.0.0.0</release_name>
+ <success>1</success>
+ <user>APFMGR</user>
+</result>
+
+Rahul Chamanthula  11:39 AM
+Srini,
+So now we don't require to add login details right.
+
+Srinivas Balabhadra  11:39 AM
+no it does  not need login
+11:40
+as the cookie is created
+
+Rahul Chamanthula  11:41 AM
+Thank you so much Srini,\
+Will ask users to trigger new builds.
+
+Srinivas Balabhadra  11:41 AM
+ok

@@ -1,12 +1,12 @@
 
-let bugNumber = "33905709";
-let sprintName = "sprint\\searu2203";
+let bugNumber = "34030536";
+let sprintName = "sprint\\searu2205";
 sprintName = "_"+sprintName.replace(/\\/g,"-") + "_";
 
 //console.log(sprintName)
 let bugType2 = "hotfix/rchamant_bug-";
 let bugType1 = "feature/rchamant_bug-";
-let comment = "Process Delta Content  self Service does not allow to do a branching for 12.2.0.1.0 Releases.";
+let comment = "CLEAR USED PATCH SPACE ON ARU MACHINE ONCE SPB IS BUILT";
 comment = "_" + comment.split(" ").join("_");
 //comment = "_" + comment.replace(/\s/g,"_");
 

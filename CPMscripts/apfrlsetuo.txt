@@ -1,0 +1,103 @@
+1. Create /prepos/vol directory
+   a. Login to your host where forms is running as arudev
+   b. mkdir -p /scratch/arudev/prepos
+        If arudev does not have permissions
+          i. login as root
+         ii. mkdir -p /scratch/arudev/prepos
+        iii. chown -R "arudev:<get arudev gid>" /scratch/arudev
+   c. Login as root
+     i. ln -s /scratch/arudev/prepos /prepos
+2. Register your host in DB with arudev account
+   a. source your env files
+   b. sqlplus aru/aru @$ISD_HOME/log/register_host.sql ==> use plsql api to register host
+        Note down the host_id returned by the above script
+
+====== For downloading patch following setup is requried =============        
+3. Updating the Patch repos location
+   a. source your env files
+   b. sqlplus aru/aru @$ISD_HOME/log/get_location.sql
+         at the prompt enter ARU# . this will return location_id, location_path and file_name
+   c. login as arudev/arudev ( unix login ) to your host and mkdir -p <location_path from previous step>
+4. download the patch from production and copy it to <location_path from step 1.a>
+5. Update $ISD_HOME/log/upd_location_host.sql, add your host_id from step 2 ( Register your host )
+5. SQLplus to aru/aru  and run the script
+   $ISD_HOME/log/upd_location.sql , enter <location_id from step1.a>. . This is updating the patch location to use your host
+6. retry failed request or submit  a new request
+============================ END  =======================================================
+
+====== For Uploading patch following setup is requried =============  
+UPDATE isd/conf/apfrl.pl setup accordingly
+ change values for vars (two occurences of this variable)
+$rl_oci_oss_bucket_name = "BUK-IAD-DEVAPP-ARURL-PATCHREPO";
+$rl_oci_logs_oss_bucket_name = "BUK-IAD-DEVAPP-ARU-LOGARCHIVE";
+$rl_oci_oss_ns = "idghdmhafadh";
+$rl_oci_region = "'us-ashburn-1'";
+$rl_oci_oss_host_name = "objectstorage.us-ashburn-1.oraclecloud.com
+
+**** check for virus can variables and make them as 0, if virus scan files are not available in env
+$virus_check_on     = 0;
+$virus_check_on_epd = 0;
+
+============================ END  =======================================================
+
+============================ configuration setup =======================================================
+*** make sure the file permissions are 600
+Under /home/{user}/.oci/config file update its content to following the
+--------start--------
+[DEFAULT]
+tenancy=ocid1.tenancy.oc1..aaaaaaaa3xlolnkkgbndddko2mdg535moze43vh4bpmdcbopi5gmkastlb2q
+user=ocid1.user.oc1..aaaaaaaaifpv7fe4pfpx63cw2fwl2psr3n67su6xz47qoeqm4yos67lanviq
+region=us-ashburn-1
+compartment=ocid1.tenancy.oc1..aaaaaaaa3xlolnkkgbndddko2mdg535moze43vh4bpmdcbopi5gmkastlb2q
+key_file=~/oci_api_key_devapp.pem
+fingerprint=3f:30:c9:1b:cb:b3:40:ad:20:90:ec:4a:55:d2:a1:4b
+----------end-----------
+
+Create oci_api_key_devapp.pem file and add following content
+-----start-----
+-----BEGIN RSA PRIVATE KEY-----
+MIIEowIBAAKCAQEApuKnVIDSl7LUsOKC55bGLttdsLCsetNIua0G0cGW8YzgzpVB
+k4Wxu0qsP4SNEgKfJPAVHkCasLDsk8w1kiVgIS4teZTWAsGP5sXQQgEduxknfmHk
+2UnhovVR6GOe6DcmhNOcfKmiK0wTDxaszTB3SYj+OiaM7oTfxHC55KlWL12rEY6A
+fhiP9yF1tbae1hrvyjOQwbNku43zA2iZQ9MB0S2N45bn/jM5saqXZI9hxij+OKri
+0EiCfC2scmmj3u55acmddxYdMj1/Tlb8QbQQDYZzGiXZ5EPzVXDU3Ya/MjnSgnb/
+qStolZW2a/TSx97sdwIfq0842DDLuVqxjCzofQIDAQABAoIBADmlZUONVDFOdqW7
+OJiivkaFQ/G6tXmf7iklGYvvISLDFQyHBiXdMq2Nd75hHRGxkiOCQuk2S7jpBG9x
+RLf87R3JA7BRtzMwhXKjtfJ2zDxKzheb3R8ppCVUNDzf3I4+LrIHHrD5L6lhF9xI
+atxd93aRObAAjQH/KASFI9FWpQyq8ZZPoIm7LmN8YBjMuXojtb0F2BWMZLtL9wnX
+S+HPr8VqGSdGuxgftW6/OIJp7sExf55OwK5Gccy604D5bmAu+Nln9fkSPueuAWQ2
+vSCqaNWbVamfmvdrR+mrGU3Vz20OIyBzgVDy+sHcHvI2Qi0m+spcBWgGNnLcBmXU
+yvPO1UECgYEAz60fhjVWiP94vWP9JyuczgMOL13PGJqRmvNt/McV+FM8shQF/hCu
+lfGSntkckbUELlOAm6lSKQDBJWZicrtXtlPY+YaG31DTVHC4B7wgMuMcaN1bRXyH
+MMgDASNfHS8TaqRPadxH1PrQcF/hf2W6nY1uL5pwK3E7PgSzGwVG3oUCgYEAzbex
+6fZM002SYRhtPt2GhjA6g8CGY5vPVStul/OMr98ge7gLvdxMMWrGiTqQz+Vaz9ol
+hGja5FBJWw86pxFMnMS8g/43tv6aTnwYe55wUN+M8i9Xs72Wi4meMYgALMG/P47U
+ieve5fFn4SwcJFMLF1Pj9XK9GWCCDsgXdvJxr5kCgYAPrE8ev9PCDxW7pVorpJz2
+50AgzwGcJ74pZYm9dADydsWz4tL486VZZ5vbJSOE05Z3MJIaLVMoCQiKnAl+AymB
+dx5+5mozXFQ2oTMiUk5TyNQSDfKfceB6C/4+Db9V4oGioLflk1xQdIValcHc7X6B
++XSBXzRr8uW3rn8d4O4SSQKBgQCBwUD1+oXAregLWDXn9iBY2Wi/G5tojql65hcu
+vs7ZS5qYjqDRU3e3n8q0Wf1nNBpQih8p4l1WrxFl3zg2kqHJLApgEuQfh33azUlA
+B9J+IFMtmxDtbULcpqPiSA8cK+SueS+0AtOoI9lK3OCvRLX1M9PQSFvf+tBt9GVg
+gFGW2QKBgF5mvat0FYZAXEKW4vVQaOmF9qsZrpHCrcU05JVuYgF6uoD34VPiXh+1
+L6fi/8IPazk8r3R39cZNMVdG6XD1TZbyFNmYH9tU7rhgcNOGixZ3b0opsljOsWb6
+hm6/wgZASSWYcSwghpVrGKPyE3LhNiob9JXH6QTQ9hEuSCfXYUZn
+-----END RSA PRIVATE KEY-----
+
+---end---
+
+
+===================
+Follow this steps: when it prompts not authenticated, while running uploadcli command
+Cmd: /scratch/software/python/bin/python3.8 /bin/oci os object put -bn BUK-IAD-DEVAPP-ARU-LOGARCHIVE --file /scratch/rchamant/prod/cpmIssues/isd/data/apfrl/US/2000/89000102/log/89000102_220308112531.log --name /logs/89000102/89000102_220308112531.log --force -ns idtj03adm895 --region us-phoenix-1
+ERROR: Could not find config file at /home/rchamant/.oci/config
+Do you want to create a new config file? [Y/n]: Y
+Do you want to create your config file by logging in through a browser? [Y/n]: n
+  This command provides a walkthrough of creating a valid CLI config file.
+  The following links explain where to find the information required by this
+  script:
+  User API Signing Key, OCID and Tenancy OCID:
+    https://docs.cloud.oracle.com/Content/API/Concepts/apisigningkey.htm#Other
+  Region:
+    https://docs.cloud.oracle.com/Content/General/Concepts/regions.htm
+  General config documentation:
+    https://docs.cloud.oracle.com/Content/API/Concepts/sdkconfig.htm   

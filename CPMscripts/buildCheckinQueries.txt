@@ -1,0 +1,27 @@
+56412832
+
+select * from isd_requests where request_id=56412871
+--56412832;
+
+select request_id from isd_requests where reference_id=33951149
+
+order by last-updated;
+
+
+APF_OEL6_VIRTUAL_GRID
+
+
+select * from aru_status_codes where status_id =30004
+
+56412871a
+
+
+select * from aru_releases where release_id=613334
+
+select * from aru_cum_patch_releases where release_name ='ECS Release 21.3.1.3.1'
+
+select ar.release_long_name release,
+                             acpr.release_version
+                      from   aru_cum_patch_releases acpr, aru_releases ar
+                      where  acpr.release_id       = 613194
+                      and    acpr.aru_release_id   = ar.release_id(+)

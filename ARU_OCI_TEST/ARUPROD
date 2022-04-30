@@ -1,0 +1,48 @@
+Rest Features:
+1. Get MASK CPM BUGS view type only
+https://aru.oraclecorp.com/ARUForms/CPMRestAPIs/mask_cpm_bugs?version=12.2.0.1.0DBRU&list=Y
+Response:
+ {
+           "error": "",
+           "masked_bugs": "32038276 ,28758697",
+           "masked_cpm_req": "1106178 ,1106003"
+         }
+2.get_patch_content
+https://aru.oraclecorp.com/ARUForms/CPMRestAPIs/get_patch_content?patch_number=33585233
+Working fine         
+
+ 3. get_previous_patches 
+ https://aru.oraclecorp.com/ARUForms/CPMRestAPIs/get_previous_patches?tracking_bug=30820785&platform_id=226&patch_mode=NON_CD 
+
+
+ Series Search: Speed to 32seconds
+
+----** Perfomance depreciated in search methods eg: FORM 5Seconds to 30Seconds
+
+ 2. Dummy request has been created on ARU TEST Database Release Update 19.13.0.0.0 series
+   Approval screen
+
+
+ 3. Created series ARU TEST Database Release Update 19.15.0.0.0
+
+
+Added required Content request products
+ Types 3:
+ 1. Without comp criteria
+ 2. With comp criteria as IN
+ 2. With comp criteria as NOT IN
+
+ Added  tracking bug specification
+ 5, RDBMS
+
+ Added Request tags
+
+ Added Series attributes of Boolean type.
+
+ Added release attributes of Boolean.
+
+ Added request attributes of Boolean, LOV, Free-form type & additional added help text also.
+
+
+ Post series creation:
+ Not Received a mail.  
